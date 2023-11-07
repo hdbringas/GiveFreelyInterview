@@ -10,12 +10,12 @@ using System.Data.Common;
 
 namespace AffiliateProgramManagementSystem.Test.UnitTests;
 
-public class AffiliateProgramServiceTests
+public class CustomerServiceTests
 {
-    private readonly ILogger<AffiliateProgramService> _logger;
+    private readonly ILogger<CustomerService> _logger;
     private readonly AffiliateProgramDbContext _dbContext;
 
-    public AffiliateProgramServiceTests()
+    public CustomerServiceTests()
     {
         ServiceCollection services = new ServiceCollection();
         services.AddLogging();
@@ -36,7 +36,7 @@ public class AffiliateProgramServiceTests
         var serviceProvier = services.BuildServiceProvider();
         var factory = serviceProvier.GetRequiredService<ILoggerFactory>();
 
-        _logger = factory.CreateLogger<AffiliateProgramService>();
+        _logger = factory.CreateLogger<CustomerService>();
         _dbContext = serviceProvier.GetRequiredService<AffiliateProgramDbContext>();
         _dbContext.Database.Migrate();
     }
@@ -44,32 +44,16 @@ public class AffiliateProgramServiceTests
     [Fact]
     public async Task CreateCustomer_BadRequestException()
     {
-        var apService = new AffiliateProgramService(_logger, _dbContext);
+        var service = new CustomerService(_logger, _dbContext);
 
-        await Assert.ThrowsAsync<BadRequestException>(() => apService.CreateCustomer(new CustomerDto() { AffiliateId = -1 }));
+        await Assert.ThrowsAsync<BadRequestException>(() => service.CreateCustomer(new CustomerDto() { AffiliateId = -1 }));
     }
 
     [Fact]
     public async Task GetCustomerByAffiliate_BadRequestException()
     {
-        var apService = new AffiliateProgramService(_logger, _dbContext);
+        var service = new CustomerService(_logger, _dbContext);
 
-        await Assert.ThrowsAsync<BadRequestException>(() => apService.GetCustomerByAffiliate(-1));
-    }
-
-    [Fact]
-    public async Task GetReferredCount_BadRequestException()
-    {
-        var apService = new AffiliateProgramService(_logger, _dbContext);
-
-        await Assert.ThrowsAsync<BadRequestException>(() => apService.GetReferredCount(-1));
-    }
-
-    [Fact]
-    public async Task GetCustomer_BadRequestException()
-    {
-        var apService = new AffiliateProgramService(_logger, _dbContext);
-
-        await Assert.ThrowsAsync<NotFoundException>(() => apService.GetCustomer(-1));
+        await Assert.ThrowsAsync<BadRequestException>(() => service.GetCustomerByAffiliate(-1));
     }
 }

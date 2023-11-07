@@ -12,11 +12,11 @@ namespace AffiliateProgramManagementSystem.Controllers;
 [ApiController]
 public class AffiliatesController : ControllerBase
 {
-    private readonly IAffiliateProgramService _service;
+    private readonly IAffiliateService _service;
     /// <summary>
     /// Constructor
     /// </summary>
-    public AffiliatesController(IAffiliateProgramService service)
+    public AffiliatesController(IAffiliateService service)
     {
         _service = service;
     }

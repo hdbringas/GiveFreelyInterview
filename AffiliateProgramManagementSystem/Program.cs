@@ -20,7 +20,8 @@ builder.Services.AddDbContext<AffiliateProgramDbContext>(options =>
 });
 
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddScoped<IAffiliateProgramService, AffiliateProgramService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IAffiliateService, AffiliateService>();
 var app = builder.Build();
 
 
